@@ -1,8 +1,8 @@
 import streamlit as st
 import requests
 
-# Flask API URL
-API_URL = "http://127.0.0.1:5000"
+# Load the API URL from Streamlit secrets
+API_URL = st.secrets["API_URL"]
 
 # Streamlit App
 st.title("AI Financial Guidance")
@@ -23,7 +23,8 @@ if st.button("Get Guidance"):
                 response = requests.post(
                     f"{API_URL}/consult",
                     json={"query": user_query},
-                    timeout=500 # Timeout for the API request
+                    timeout=500,  # Timeout for the API request
+                    verify=False  # Disable SSL verification for testing purposes
                 )
                 if response.status_code == 200:
                     # Parse and display the response
